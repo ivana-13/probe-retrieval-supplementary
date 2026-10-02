@@ -1,0 +1,14 @@
+\begin{tabular}{l cccc cccc}
+\toprule
+& \multicolumn{4}{c}{\svo{} (human labels)} & \multicolumn{4}{c}{COCO with SugarCrepe (o3 labels)}\\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Decision & Bench. & Pool & TPR & TNR & Bench. & Pool & TPR & TNR\\
+\midrule
+BLIP-2 head & 63.4 & 57/54 & 23/13 & 94/94 & 70.4 & 86/77 & 60/75 & 91/79 \\
+FLAVA head & 62.4 & 56/54 & 49/46 & 64/62 & 50.0 & 83/59 & 0/0 & 100/100 \\
+Qwen2.5-VL prompt & 86.8 & 79/79 & 76/74 & 83/84 & 84.8 & 91/85 & 81/84 & 93/85 \\
+\qemb{} yes/no & 84.2 & 75/71 & 90/92 & 59/50 & 76.7 & 79/71 & 93/94 & 77/55 \\
+\midrule
+Always ``no match'' & 50.0 & 48/51 & 0/0 & 100/100 & 50.0 & 83/59 & 0/0 & 100/100 \\
+\bottomrule
+\end{tabular}

@@ -186,6 +186,32 @@ write("tab_long_full_both.tex",
       "Model & " + head + " & " + head + "\\\\\n\\midrule\n" + block("SVO-Probes", 13) + "\n" + "\n".join(rows["svo"])
       + "\n\\midrule\n" + block("COCO val2017", 13) + "\n" + "\n".join(rows["coco"]) + "\n\\bottomrule\n\\end{tabular}\n")
 
+# 3f. binary matching decisions: ITM accuracy on the benchmark's own pairs, and accuracy, true-positive and true-negative
+#     rate on the judged pools (caption / image queries), with the constant answer "no match" as a reference row
+itm_svo = json.load(open(RESULTS / "itm_pools.json"))
+itm_coco = json.load(open(RESULTS / "coco_itm_pools_o3.json"))
+itm_bench = json.load(open(RESULTS / "itm_benchmark.json"))
+itm_sc = json.load(open(RESULTS / "coco_itm.json"))
+head_auc = json.load(open(RESULTS / "itm_head_auc.json"))
+ITM_ROWS = [("BLIP2", "BLIP-2 head"), ("FLAVA", "FLAVA head"), ("Qwen25", "Qwen2.5-VL prompt"), ("Qwen3", "\\qemb{} yes/no")]
+
+
+def both(src, m, key):
+    return "/".join(f"{src[m][d][key]['mean']:.0f}" for d in DIRECTIONS)
+
+
+rows = []
+for m, name in ITM_ROWS:
+    rows.append(" & ".join([name, f"{itm_bench[m]['overall']['mean']:.1f}", both(itm_svo, m, "pool_all"), both(itm_svo, m, "positives_recall"),
+                            both(itm_svo, m, "negatives_recall"), f"{itm_sc[m]['sugarcrepe']['overall']['mean']:.1f}", both(itm_coco, m, "pool_all"),
+                            both(itm_coco, m, "positives_recall"), both(itm_coco, m, "negatives_recall")]) + " \\\\")
+const = lambda key: "/".join(f"{head_auc['BLIP2'][key + d]['share_incorrect']:.0f}" for d in DIRECTIONS)
+rows.append("\\midrule\nAlways ``no match'' & 50.0 & " + const("svo_pool_") + " & 0/0 & 100/100 & 50.0 & " + const("coco_pool_") + " & 0/0 & 100/100 \\\\")
+write("tab_long_itm_compact.tex",
+      "\\begin{tabular}{l cccc cccc}\n\\toprule\n& \\multicolumn{4}{c}{\\svo{} (human labels)} & \\multicolumn{4}{c}{COCO with SugarCrepe (o3 labels)}\\\\\n"
+      "\\cmidrule(lr){2-5}\\cmidrule(lr){6-9}\nDecision & Bench. & Pool & TPR & TNR & Bench. & Pool & TPR & TNR\\\\\n\\midrule\n"
+      + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+
 # 4. n-way figure on SVO-Probes: random negatives against other-mined negatives, on the same fixed query set per model
 PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
 MARKERS = ["o", "s", "^", "D", "v", "P"]

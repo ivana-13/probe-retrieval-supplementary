@@ -29,7 +29,8 @@ over in-batch pairs with temperature 0.1, 10,000 MS-COCO train pairs, one epoch 
 
 ## Binary matching decisions
 
-These decisions are not part of the paper; their results are in `extra_results.md`, section 9.
+The paper reports these decisions in one compact table; the full results (pairs the model itself or only other
+models retrieved, areas under the ROC curve) are in `extra_results.md`, section 9.
 
 - **BLIP-2**: the first-stage matching head of LAVIS `blip2_image_text_matching` (`pretrain`), ITM logits averaged over
   the query tokens; a match when the softmax match probability exceeds 0.5.
