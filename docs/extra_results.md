@@ -257,3 +257,16 @@ Leave-one-out test: the items that only the given model contributed to the pool 
 | I→T | SigLIP2 | 35.2 | 78.0 | 69.0 | 64.8 | 48.4 |
 | I→T | Qwen2.5-VL-FT | 33.1 | 78.0 | 70.0 | 61.5 | 48.8 |
 | I→T | Qwen3-VL-Embed | 29.4 | 86.0 | 78.0 | 69.4 | 52.6 |
+
+## 13. SugarCrepe negatives: best relevant caption against the probe's own decision
+
+Image queries of the COCO pool. `Best relevant` scores each edited caption against the best of the image's relevant captions, as every condition of the matched-negative table does; `Own caption` is the probe's decision, each edited caption against the caption it was made from. p-values: paired randomisation test, Holm-corrected.
+
+| Model | Best relevant | Own caption | All pooled | Self-mined | p (all vs own) | p (self vs own) |
+|---|---|---|---|---|---|---|
+| CLIP | 93.8 | 70.3 | 90.3 | 73.7 | 0.0001 | 1.00 |
+| BLIP-2 | 91.2 | 69.1 | 88.8 | 64.2 | 0.0001 | 1.00 |
+| FLAVA | 96.4 | 80.2 | 93.4 | 74.8 | 0.0001 | 1.00 |
+| SigLIP2 | 94.6 | 77.2 | 95.5 | 84.3 | 0.0001 | 0.63 |
+| Qwen2.5-VL-FT | 97.8 | 77.5 | 92.8 | 74.4 | 0.0001 | 1.00 |
+| Qwen3-VL-Embed | 94.7 | 80.4 | 98.1 | 88.4 | 0.0001 | 0.22 |

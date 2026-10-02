@@ -50,6 +50,9 @@ def paired(a, b):
 
 out = {"matched": {}, "tests": {}, "reference": {}, "nway": {}}
 universe_sorted = {}
+probe_by_image = {}
+for item in coll.probe:                                  # SugarCrepe items of an image: (caption, edited caption)
+    probe_by_image.setdefault(int(item["image_id"]), []).append((item["caption"], item["negative_caption"]))
 for m in models:
     s = CocoScorer(m)
     for k in out:
@@ -83,7 +86,17 @@ for m in models:
                                   for _ in range(RANDOM_DRAWS)]))
             own = sorted([c for c in cands if m in cands[c]["retrieved_by"]], key=lambda c: cands[c]["retrieved_by"][m])
             top1 = lab.get(own[0]) if own else None
+            # the probe's own decision: each edited caption against the caption it was built from (image queries only);
+            # "benchmark" scores the same edited captions against the best relevant caption, like the other conditions
+            probe_own = None
+            if d == "i2t" and probe_by_image.get(qq):
+                dec = []
+                for cap, neg in probe_by_image[qq]:
+                    a, b = s.score(d, qq, [cap, neg])
+                    dec.append(float(a > b))
+                probe_own = float(np.mean(dec))
             rows.append({"q": str(q), "rank": rank, "benchmark": bench_perq.get(m, {}).get(d, {}).get("benchmark", {}).get(str(q)),
+                         "benchmark_own": probe_own,
                          "random": rand, "pool_other": acc(neg_other), "pool_self": acc(neg_self),
                          "pool_all": acc([conv(c) for c in negs]), "n_other": len(neg_other),
                          "other_beating": int(np.sum(s.score(d, qq, neg_other) >= g)) if neg_other else 0,
@@ -91,7 +104,7 @@ for m in models:
                          "_g": g, "_neg_scores": neg_scores,
                          "_other_scores": s.score(d, qq, neg_other) if neg_other else np.array([])})
         col = lambda k: [r[k] for r in rows]
-        res = {k: summ(col(k)) for k in ["benchmark", "random", "pool_other", "pool_self", "pool_all"]}
+        res = {k: summ(col(k)) for k in ["benchmark", "benchmark_own", "random", "pool_other", "pool_self", "pool_all"]}
         res["violations_of_bound"] = int(sum(r["other_beating"] > 0 for r in rows if r["rank"] <= 10))
         out["matched"][m][d] = res
         outside = [r for r in rows if r["rank"] > 10]
@@ -101,6 +114,9 @@ for m in models:
             "random_vs_other": paired(col("random"), col("pool_other")),
             "random_vs_all": paired(col("random"), col("pool_all")),
             "random_vs_benchmark": paired(col("random"), col("benchmark")),
+            "benchmark_vs_benchmark_own": paired(col("benchmark"), col("benchmark_own")),
+            "all_vs_benchmark_own": paired(col("pool_all"), col("benchmark_own")),
+            "self_vs_benchmark_own": paired(col("pool_self"), col("benchmark_own")),
             "other_vs_self": paired(col("pool_other"), col("pool_self")),
             "outside_top10": {"n_queries": len(outside), "benchmark": summ([r["benchmark"] for r in outside]),
                               "pool_other": summ([r["pool_other"] for r in outside]),
@@ -150,7 +166,8 @@ for m in models:
         out["nway"][m][d] = nw
 
 # Holm correction over the cells in which each comparison exists
-for comp in ["benchmark_vs_other", "benchmark_vs_all", "random_vs_other", "random_vs_all", "random_vs_benchmark", "other_vs_self"]:
+for comp in ["benchmark_vs_other", "benchmark_vs_all", "random_vs_other", "random_vs_all", "random_vs_benchmark", "other_vs_self",
+             "benchmark_vs_benchmark_own", "all_vs_benchmark_own", "self_vs_benchmark_own"]:
     cells = {(m, d): out["tests"][m][d][comp]["p_randomisation"] for m in models for d in DIRECTIONS if out["tests"][m][d][comp]}
     for (m, d), p in M.holm(cells).items():
         out["tests"][m][d][comp]["p_randomisation_holm"] = p
