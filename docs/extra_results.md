@@ -270,3 +270,56 @@ Image queries of the COCO pool. `Best relevant` scores each edited caption again
 | SigLIP2 | 94.6 | 77.2 | 95.5 | 84.3 | 0.0001 | 0.63 |
 | Qwen2.5-VL-FT | 97.8 | 77.5 | 92.8 | 74.4 | 0.0001 | 1.00 |
 | Qwen3-VL-Embed | 94.7 | 80.4 | 98.1 | 88.4 | 0.0001 | 0.22 |
+
+## 14. Sensitivity to the pool depth
+
+A pool of depth D keeps the judged candidates that at least one model ranked within its top D; self- and other-mined negatives are redefined for that depth. Depth 10 is the pool of the paper; depths 5 and 3 are shallower pools from the same labels. `gap` = handcrafted minus other-mined accuracy, with its Holm-corrected p-value. On COCO handcrafted negatives exist for image queries only.
+
+| Benchmark | Dir. | Model | Other (D=3) | gap | p | Other (D=5) | gap | p | Other (D=10) | gap | p |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| SVO-Probes | T→I | CLIP | 69.6 | +16.2 | 0.0001 | 73.1 | +12.9 | 0.0002 | 77.4 | +9.3 | 0.0011 |
+| SVO-Probes | T→I | BLIP-2 | 71.7 | +19.4 | 0.0001 | 75.1 | +15.4 | 0.0001 | 82.4 | +8.4 | 0.0011 |
+| SVO-Probes | T→I | FLAVA | 74.7 | +16.2 | 0.0001 | 74.9 | +14.8 | 0.0001 | 79.8 | +10.2 | 0.0004 |
+| SVO-Probes | T→I | SigLIP2 | 70.7 | +17.9 | 0.0001 | 74.0 | +15.2 | 0.0001 | 79.5 | +10.0 | 0.0011 |
+| SVO-Probes | T→I | Qwen2.5-VL-FT | 75.1 | +15.8 | 0.0001 | 77.0 | +13.9 | 0.0001 | 83.6 | +7.5 | 0.0014 |
+| SVO-Probes | T→I | Qwen3-VL-Embed | 79.5 | +15.1 | 0.0001 | 82.1 | +12.8 | 0.0001 | 85.4 | +9.7 | 0.0005 |
+| SVO-Probes | I→T | CLIP | 69.5 | +17.7 | 0.0001 | 72.8 | +15.1 | 0.0001 | 76.8 | +10.9 | 0.0005 |
+| SVO-Probes | I→T | BLIP-2 | 82.2 | +10.7 | 0.0003 | 83.1 | +9.9 | 0.0003 | 85.2 | +7.9 | 0.0015 |
+| SVO-Probes | I→T | FLAVA | 73.7 | +10.6 | 0.0040 | 75.7 | +9.1 | 0.0044 | 79.0 | +6.2 | 0.0247 |
+| SVO-Probes | I→T | SigLIP2 | 80.6 | +13.5 | 0.0002 | 86.0 | +8.5 | 0.0025 | 87.8 | +6.8 | 0.0105 |
+| SVO-Probes | I→T | Qwen2.5-VL-FT | 78.5 | +14.3 | 0.0001 | 80.2 | +12.8 | 0.0001 | 84.2 | +9.0 | 0.0011 |
+| SVO-Probes | I→T | Qwen3-VL-Embed | 81.5 | +13.8 | 0.0001 | 84.8 | +10.8 | 0.0001 | 88.0 | +7.7 | 0.0011 |
+| COCO | I→T | CLIP | 95.6 | -2.3 | 1.0000 | 97.0 | -3.4 | 0.3665 | 97.4 | -3.6 | 0.1752 |
+| COCO | I→T | BLIP-2 | 95.6 | -5.8 | 0.3162 | 97.3 | -6.5 | 0.0474 | 98.4 | -7.2 | 0.0069 |
+| COCO | I→T | FLAVA | 96.8 | -0.8 | 1.0000 | 98.2 | -1.9 | 0.6082 | 99.7 | -3.4 | 0.0054 |
+| COCO | I→T | SigLIP2 | 98.4 | -3.8 | 0.3162 | 98.6 | -4.1 | 0.1157 | 99.2 | -4.7 | 0.0069 |
+| COCO | I→T | Qwen2.5-VL-FT | 96.7 | +1.1 | 1.0000 | 97.5 | +0.2 | 0.8499 | 98.0 | -0.2 | 0.8631 |
+| COCO | I→T | Qwen3-VL-Embed | 99.4 | -5.1 | 0.0169 | 99.4 | -4.8 | 0.0451 | 99.8 | -5.1 | 0.0035 |
+
+Self-mined negatives stay significantly harder than other-mined ones at every depth on both benchmarks.
+
+## 15. Retrieval over the full datasets, including the mean reciprocal rank
+
+Strict labels. MRR@20: mean reciprocal rank of the first relevant item, 0 beyond rank 20.
+
+**SVO-Probes** (Kendall's τ between the model orderings by Success@1 and by MRR@20: T→I 0.87, I→T 1.00)
+
+| Model | T→I S@1 | S@5 | S@10 | MRR@20 | I→T S@1 | S@5 | S@10 | MRR@20 |
+|---|---|---|---|---|---|---|---|---|
+| CLIP | 8.7 | 23.8 | 32.8 | 15.9 | 6.5 | 20.5 | 30.3 | 13.4 |
+| BLIP-2 | 9.7 | 27.1 | 37.9 | 18.1 | 13.2 | 35.3 | 47.1 | 23.5 |
+| FLAVA | 8.6 | 24.3 | 34.7 | 16.3 | 5.6 | 17.2 | 24.9 | 11.4 |
+| SigLIP2 | 10.4 | 28.5 | 39.1 | 19.0 | 13.4 | 35.9 | 48.1 | 23.9 |
+| Qwen2.5-VL-FT | 12.2 | 31.7 | 42.6 | 21.4 | 13.2 | 35.0 | 46.7 | 23.4 |
+| Qwen3-VL-Embed | 14.4 | 36.9 | 49.0 | 24.8 | 16.8 | 41.0 | 53.3 | 28.0 |
+
+**COCO val2017** (Kendall's τ between the model orderings by Success@1 and by MRR@20: T→I 1.00, I→T 1.00)
+
+| Model | T→I S@1 | S@5 | S@10 | MRR@20 | I→T S@1 | S@5 | S@10 | MRR@20 |
+|---|---|---|---|---|---|---|---|---|
+| CLIP | 36.0 | 61.0 | 71.0 | 47.3 | 57.0 | 79.8 | 86.9 | 67.1 |
+| BLIP-2 | 30.3 | 52.5 | 62.6 | 40.6 | 40.4 | 68.1 | 78.7 | 52.8 |
+| FLAVA | 41.5 | 71.3 | 81.7 | 54.7 | 48.8 | 80.1 | 89.9 | 62.4 |
+| SigLIP2 | 48.5 | 73.1 | 81.5 | 59.5 | 64.2 | 85.6 | 91.2 | 73.5 |
+| Qwen2.5-VL-FT | 37.9 | 63.2 | 73.5 | 49.4 | 51.8 | 76.8 | 84.9 | 62.7 |
+| Qwen3-VL-Embed | 54.8 | 79.4 | 86.9 | 65.7 | 71.2 | 89.9 | 94.6 | 79.4 |
