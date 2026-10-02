@@ -133,9 +133,58 @@ write("tab_long_itm_pools_both.tex",
 
 # 3c. assessor-validation table without the full-width footnote row (it forced the table to a tiny font);
 #     the inter-annotator figures go into the caption
+#     the intervals are replaced by query-clustered ones (scripts/42_assessor_and_order_checks.py), because a pair
+#     retrieved by several models occurs in several lists and the pairs of a query are not independent
+import re
+CL = json.load(open(RESULTS / "assessor_and_order_checks.json"))["clustered_ci"]
 lines = (OUT / "tab_judge.tex").read_text(encoding="utf-8").splitlines()
 foot = next(i for i, x in enumerate(lines) if "Between the three annotators" in x)
-write("tab_long_judge.tex", "\n".join(lines[:foot - 1] + lines[foot + 1:]) + "\n")
+lines = lines[:foot - 1] + lines[foot + 1:]
+first = max(i for i, x in enumerate(lines) if x.startswith("\\midrule")) + 1
+for i, key in enumerate(["o3_i2t", "o3_t2i", "gpt4o_i2t", "gpt4o_t2i", "o3_coco"]):
+    cis = iter([CL[key]["f1_ci"], CL[key]["kappa_ci"]])
+    row, n = re.subn(r"\[[0-9.]+, [0-9.]+\]", lambda _: "[%.2f, %.2f]" % tuple(next(cis)), lines[first + i])
+    assert n == 2, lines[first + i]
+    lines[first + i] = row
+write("tab_long_judge.tex", "\n".join(lines) + "\n")
+
+# 3d. one probe table for the six embedding models: pairwise accuracy on SVO-Probes and on SugarCrepe
+def probe_rows(name):
+    out = {}
+    for r in body_rows(name):
+        c = [x.strip() for x in r.rstrip("\\ ").split("&")]
+        if "zero-shot" in c[0]:
+            continue                      # the prompted model does no retrieval and is documented in the repository
+        out[c[0].replace(" (embedding)", "")] = c[1:5]
+    return out
+
+
+svo_p, coco_p = probe_rows("tab_pairwise_itm.tex"), probe_rows("tab_coco_pairwise_itm.tex")
+assert list(svo_p) == list(coco_p) == [DISPLAY[m] for m in MODELS], (list(svo_p), list(coco_p))
+write("tab_long_probe.tex",
+      "\\begin{tabular}{l cccc cccc}\n\\toprule\n& \\multicolumn{4}{c}{SVO-Probes} & \\multicolumn{4}{c}{SugarCrepe}\\\\\n"
+      "\\cmidrule(lr){2-5}\\cmidrule(lr){6-9}\nModel & All & Subj. & Verb & Obj. & All & Obj. & Att. & Rel.\\\\\n\\midrule\n"
+      + "\n".join(" & ".join([k] + svo_p[k] + coco_p[k]) + " \\\\" for k in svo_p) + "\n\\bottomrule\n\\end{tabular}\n")
+
+# 3e. one retrieval table for both benchmarks (COCO has no human labels on the full pool)
+head = "\\sat{1} & \\sat{5} & \\sat{10} & Strict & Human & o3"
+rows = {"svo": [], "coco": []}
+for m in MODELS:
+    c, cc = [DISPLAY[m]], [DISPLAY[m]]
+    for d in DIRECTIONS:
+        r, ref = full[m][d], A["reference"][m][d]
+        c += [fmt(r["S@1"]), f"{r['S@5']['mean']:.1f}", f"{r['S@10']['mean']:.1f}", f0(ref["S@1"]), f0(ref["judged_S@1"]), f0(ref["judged_S@1_o3"])]
+        r, ref = cfull[m][d], C["reference"][m][d]
+        cc += [fmt(r["S@1"]), f"{r['S@5']['mean']:.1f}", f"{r['S@10']['mean']:.1f}", f0(ref["S@1"]), "--", f0(ref["judged_S@1"])]
+    rows["svo"].append(" & ".join(c) + " \\\\")
+    rows["coco"].append(" & ".join(cc) + " \\\\")
+write("tab_long_full_both.tex",
+      "\\begin{tabular}{l ccc ccc ccc ccc}\n\\toprule\n& \\multicolumn{6}{c}{" + DIRECTION_LABEL["t2i"] +
+      "} & \\multicolumn{6}{c}{" + DIRECTION_LABEL["i2t"] + "}\\\\\n\\cmidrule(lr){2-7}\\cmidrule(lr){8-13}\n"
+      "& \\multicolumn{3}{c}{Full dataset} & \\multicolumn{3}{c}{\\sat{1}, pool queries} & \\multicolumn{3}{c}{Full dataset} & "
+      "\\multicolumn{3}{c}{\\sat{1}, pool queries}\\\\\n\\cmidrule(lr){2-4}\\cmidrule(lr){5-7}\\cmidrule(lr){8-10}\\cmidrule(lr){11-13}\n"
+      "Model & " + head + " & " + head + "\\\\\n\\midrule\n" + block("SVO-Probes", 13) + "\n" + "\n".join(rows["svo"])
+      + "\n\\midrule\n" + block("COCO val2017", 13) + "\n" + "\n".join(rows["coco"]) + "\n\\bottomrule\n\\end{tabular}\n")
 
 # 4. n-way figure on SVO-Probes: random negatives against other-mined negatives, on the same fixed query set per model
 PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]

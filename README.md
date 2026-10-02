@@ -3,7 +3,7 @@
 Judged retrieval pools, annotation material and analysis code for an anonymous submission on image–text matching
 probes and retrieval.
 
-The paper treats two probing benchmarks, SVO-Probes and SugarCrepe over COCO, as retrieval test collections. For 100
+The paper treats two probing benchmarks, SVO-Probes and SugarCrepe over COCO, as retrieval tasks. For 100
 caption queries and 100 image queries per benchmark, the top-10 results of six models were labelled, and the same
 two-way decision is then evaluated against handcrafted, random and retrieval-mined negatives.
 
@@ -23,7 +23,7 @@ docs/
   assessor_prompts.md          the prompts of the LLM assessors, word for word
   implementation_details.md    checkpoints, prompts, hyperparameters, scoring, statistics
   metric_definitions.md        exact definition of every reported quantity
-  extra_results.md             tables that did not fit into the paper
+  extra_results.md             results beyond the paper: robustness checks, matching heads, cross-model matrices
 ```
 
 ### Judged pools
@@ -54,6 +54,7 @@ cd pipeline
 pip install -r requirements.txt
 python scripts/02_build_pool.py        # the union pool from the labelled lists, inter-annotator agreement
 python scripts/09_judge_validation.py  # LLM assessors against the human labels
+python scripts/42_assessor_and_order_checks.py  # assessor against single annotators, query-clustered intervals
 python scripts/34_tables.py            # matched-negative, retrieval and assessor tables, n-way figure, text ranges
 python scripts/12_make_tables.py       # probe, ITM-pool and assessor-validation tables of SVO-Probes
 ```

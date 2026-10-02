@@ -43,7 +43,12 @@ Holm correction over the model-and-direction cells of a comparison.
 
 **Robustness variants on SVO-Probes**: `pool_other_dual` (without items retrieved only by the two Qwen models),
 `pool_other_unanimous` (image queries; only items that all three annotators marked incorrect in every list that carries
-three votes), `pool_other_consistent` (without pairs labelled differently in two lists).
+three votes), `pool_other_consistent` (without pairs labelled differently in two lists), `pool_other_o3`
+(only items that the o3 assessor labelled in at least one list and never labelled correct). The tests named
+`benchmark_max_vs_*` compare these variants with the handcrafted negatives scored against the best relevant item.
+
+**One rule on COCO** (`*_own` conditions of `coco_analyses.json`): every negative of an image query, handcrafted or
+mined, is scored against the caption each SugarCrepe item of the image was built from, averaged over those items.
 
 ## n-way curves
 
@@ -60,10 +65,13 @@ model and direction, Holm-corrected.
 
 ## Cross-model matrix
 
-For scorer A and miner B: accuracy of A on the judged-incorrect items that B retrieved in its top 10.
+For scorer A and miner B: accuracy of A on the judged-incorrect items that B retrieved in its top 10. The cell includes items
+that A retrieved as well, so it is not the other-mined condition.
 
 ## Assessor agreement
 
 Accuracy, precision and recall of the `correct` class, its F1 and Cohen's kappa between the assessor's label and the
 human label (majority vote where three annotators labelled a pair), on the pairs for which the assessor returned a
-parseable label; four-way kappa on the labels correct / subject / verb / object incorrect.
+parseable label; four-way kappa on the labels correct / subject / verb / object incorrect. Intervals in the paper's
+table come from a bootstrap over queries (`scripts/42_assessor_and_order_checks.py`), which also compares the assessor
+with each annotator separately.

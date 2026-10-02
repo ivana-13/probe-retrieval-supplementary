@@ -13,6 +13,10 @@ Checkpoints, prompts, training details and statistics behind the paper's experim
 | Qwen2.5-VL-FT | Qwen2.5-VL-7B-Instruct in 4-bit with our QLoRA adapter; embedding = last hidden state of the final token (3,584-d) after the prompt "This image means in one word: " (images) or "This caption: "[caption]" means in one word: " (captions) |
 | Qwen3-VL-Embed | `Qwen3-VL-Embedding-2B` in fp16, images resized to 1024 x 1024, no instruction (2,048-d) |
 
+**BLIP-2 variant.** The published BLIP-2 retrieval setting takes the maximum similarity over all 32 query tokens and
+re-ranks the top candidates with the matching head. We use the first query token only and no re-ranking, so the BLIP-2
+rows of the paper describe this reduced variant and are lower than published retrieval results.
+
 **Scoring.** Retrieval and pairwise decisions use the dot product of the image and caption embeddings. The embeddings of
 BLIP-2, Qwen2.5-VL-FT and Qwen3-VL-Embed are unit-normalised, so for them this is the cosine similarity; those of CLIP,
 FLAVA and SigLIP2 are used as extracted on SVO-Probes (`svo_eval/embeddings.py`). `scripts/03c_metrics_cosine.py`
@@ -24,6 +28,8 @@ over in-batch pairs with temperature 0.1, 10,000 MS-COCO train pairs, one epoch 
 (effective batch 256, 40 optimiser steps), learning rate 4e-4 (`qwen25/qwen_fine-tunning.py`).
 
 ## Binary matching decisions
+
+These decisions are not part of the paper; their results are in `extra_results.md`, section 9.
 
 - **BLIP-2**: the first-stage matching head of LAVIS `blip2_image_text_matching` (`pretrain`), ITM logits averaged over
   the query tokens; a match when the softmax match probability exceeds 0.5.

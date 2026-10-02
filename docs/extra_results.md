@@ -40,9 +40,30 @@ Other-mined accuracy without the items that only the two Qwen models retrieved, 
 | I→T | Qwen2.5-VL-FT | 84.2 | 8 | 85.6 | 7.1 | 0.0023 | 86.3 | 6.4 | 0.0043 |
 | I→T | Qwen3-VL-Embed | 88.0 | 13 | 88.6 | 6.7 | 0.0011 | 89.6 | 5.7 | 0.0044 |
 
+The same controls as reported in the paper: handcrafted negatives scored against the best relevant item, Holm-corrected p-values. `o3 agrees`: only the other-mined negatives that the o3 assessor also labelled incorrect; `share` is the part of the other-mined negatives that the restriction keeps.
+
+| Dir. | Model | Handcr. | Other, unanimous | gap | p | share | Other, o3 agrees | gap | p | share | Other w/o Qwen-only | gap | p |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| T→I | CLIP | 86.7 | – | – | – | – | 77.6 | +9.1 | 0.004 | 81 | 78.8 | +7.6 | 0.013 |
+| T→I | BLIP-2 | 90.8 | – | – | – | – | 84.1 | +6.7 | 0.008 | 83 | 83.3 | +7.4 | 0.013 |
+| T→I | FLAVA | 90.1 | – | – | – | – | 81.5 | +8.4 | 0.008 | 83 | 78.5 | +11.3 | 0.000 |
+| T→I | SigLIP2 | 89.5 | – | – | – | – | 80.2 | +9.2 | 0.005 | 83 | 79.9 | +9.4 | 0.004 |
+| T→I | Qwen2.5-VL-FT | 91.1 | – | – | – | – | 83.7 | +7.3 | 0.008 | 83 | 84.7 | +6.3 | 0.010 |
+| T→I | Qwen3-VL-Embed | 95.1 | – | – | – | – | 86.6 | +8.4 | 0.003 | 84 | 86.2 | +8.8 | 0.001 |
+| I→T | CLIP | 87.8 | 78.9 | +8.3 | 0.022 | 54 | 78.4 | +9.4 | 0.003 | 89 | 75.3 | +12.3 | 0.000 |
+| I→T | BLIP-2 | 93.1 | 88.6 | +4.3 | 0.055 | 52 | 86.2 | +6.9 | 0.008 | 89 | 86.9 | +6.2 | 0.013 |
+| I→T | FLAVA | 85.2 | 79.2 | +5.6 | 0.089 | 51 | 79.2 | +6.0 | 0.029 | 90 | 78.0 | +7.2 | 0.015 |
+| I→T | SigLIP2 | 94.6 | 87.7 | +6.8 | 0.022 | 54 | 88.4 | +6.2 | 0.018 | 90 | 87.2 | +7.4 | 0.013 |
+| I→T | Qwen2.5-VL-FT | 93.0 | 86.3 | +6.8 | 0.010 | 64 | 84.0 | +9.2 | 0.001 | 89 | 85.6 | +7.5 | 0.006 |
+| I→T | Qwen3-VL-Embed | 95.7 | 89.6 | +6.1 | 0.009 | 62 | 89.4 | +6.3 | 0.008 | 89 | 88.6 | +7.1 | 0.003 |
+
 ## 3. Cross-model matrices (SVO-Probes)
 
-Accuracy of the row model on the judged-incorrect items that the column model retrieved.
+Accuracy of the row model on the judged-incorrect items that the column model retrieved. A cell includes the items that the row model retrieved as well, so the off-diagonal cells mix transfer with the overlap of the two top-10 lists and lie below the `Other` condition of the matched-negative table, which excludes the row model's own retrievals. The diagonal is the self-mined condition.
+
+T→I: the diagonal is the row minimum in 6 of 6 rows; averaged over the other models, the negatives mined by Qwen3-VL-Embed are the hardest (mean 67.5), and they are the hardest off-diagonal column for 2 of the 5 other models.
+
+I→T: the diagonal is the row minimum in 6 of 6 rows; averaged over the other models, the negatives mined by Qwen3-VL-Embed are the hardest (mean 67.8), and they are the hardest off-diagonal column for 3 of the 5 other models.
 
 **T→I**
 
@@ -185,9 +206,44 @@ o3 against the expert on the COCO validation sample.
 | I→T | 359 | 84.4 | 0.87 | 0.68 | 0.76 | 0.65 |
 | Both | 705 | 88.8 | 0.83 | 0.65 | 0.73 | 0.66 |
 
-## 9. Matching heads without a threshold
+o3 against each annotator separately, on the three-annotator lists (image queries, four dual encoders, 3960 entries with an o3 label): Cohen's κ 0.61, 0.60, 0.57; between pairs of annotators on the same entries: 0.68, 0.67, 0.64; o3 against the majority vote: 0.65.
 
-Area under the ROC curve of the head's match probability, and the share of incorrect pairs in each pool (the accuracy of always answering "no match").
+Intervals of the assessor table in the paper resample whole queries (2,000 resamples), because a pair retrieved by several models occurs in several lists. Share of list entries without a parseable label: o3 T→I 4.1; o3 I→T 1.0; GPT-4o T→I 13.6; GPT-4o I→T 6.8.
+
+| Assessor and labels | Queries | F1 (correct), 95% interval | Cohen's κ, 95% interval |
+|---|---|---|---|
+| o3, T→I (expert) | 99 | [0.82, 0.87] | [0.61, 0.71] |
+| o3, I→T (majority of 3) | 99 | [0.81, 0.86] | [0.60, 0.70] |
+| GPT-4o, T→I (expert) | 99 | [0.76, 0.81] | [0.47, 0.55] |
+| GPT-4o, I→T (majority of 3) | 98 | [0.70, 0.75] | [0.42, 0.50] |
+| o3, COCO sample (expert) | 24 | [0.60, 0.81] | [0.53, 0.76] |
+
+## 9. Binary matching decisions on the benchmark pairs and on the judged pools
+
+Four models also make a yes/no matching decision (see `implementation_details.md`): the matching heads of BLIP-2 and FLAVA, a yes/no prompt to the zero-shot Qwen2.5-VL-7B-Instruct model (without the adapter; on the pools its `Self` pairs are those retrieved by the fine-tuned embedder), and a yes/no construction with Qwen3-VL-Embed. ITM accuracy is the share of positive and negative pairs classified correctly. `Benchmark` is the accuracy on the benchmark's own balanced pairs; the other columns re-run the decision on every judged pool pair and score it against the pool label (human on SVO-Probes, o3 on COCO): all pairs, pairs the model itself retrieved, pairs only other models retrieved, the true-positive rate on judged-correct pairs and the true-negative rate on judged-incorrect pairs.
+
+| Benchmark | Decision | Pool | Benchmark | Pool: all | Self | Other | TPR | TNR |
+|---|---|---|---|---|---|---|---|---|
+| SVO-Probes | BLIP-2 head | T→I | 63.4 | 57.0 | 58.7 | 56.4 | 22.7 | 93.8 |
+| SVO-Probes | BLIP-2 head | I→T | 63.4 | 53.6 | 49.0 | 55.3 | 12.7 | 93.7 |
+| SVO-Probes | FLAVA head | T→I | 62.4 | 56.2 | 57.0 | 55.9 | 49.4 | 63.6 |
+| SVO-Probes | FLAVA head | I→T | 62.4 | 54.0 | 51.9 | 54.8 | 45.7 | 62.1 |
+| SVO-Probes | Qwen2.5-VL (zero-shot prompt) | T→I | 86.8 | 79.3 | 80.7 | 78.8 | 76.0 | 82.9 |
+| SVO-Probes | Qwen2.5-VL (zero-shot prompt) | I→T | 86.8 | 78.9 | 79.9 | 78.6 | 73.8 | 83.9 |
+| SVO-Probes | Qwen3-VL-Embed (yes/no) | T→I | 84.2 | 75.0 | 79.4 | 73.4 | 90.0 | 59.0 |
+| SVO-Probes | Qwen3-VL-Embed (yes/no) | I→T | 84.2 | 70.9 | 80.3 | 67.4 | 92.4 | 49.8 |
+| COCO | BLIP-2 head | T→I | 70.4 | 85.9 | 83.0 | 87.4 | 59.7 | 91.3 |
+| COCO | BLIP-2 head | I→T | 70.4 | 77.0 | 77.2 | 77.0 | 74.9 | 78.5 |
+| COCO | FLAVA head | T→I | 50.0 | 82.8 | 75.0 | 86.6 | 0.0 | 99.9 |
+| COCO | FLAVA head | I→T | 50.0 | 59.1 | 49.7 | 62.9 | 0.3 | 99.6 |
+| COCO | Qwen2.5-VL (zero-shot prompt) | T→I | 84.8 | 91.2 | 90.8 | 91.4 | 80.5 | 93.4 |
+| COCO | Qwen2.5-VL (zero-shot prompt) | I→T | 84.8 | 84.6 | 83.6 | 85.0 | 84.1 | 84.9 |
+| COCO | Qwen3-VL-Embed (yes/no) | T→I | 76.7 | 79.4 | 76.6 | 80.8 | 93.1 | 76.6 |
+| COCO | Qwen3-VL-Embed (yes/no) | I→T | 76.7 | 71.1 | 75.9 | 69.2 | 93.9 | 55.5 |
+
+The decisions of the two heads are one-sided. On the SVO-Probes pool the BLIP-2 head answers "no match" for most pairs, including most of the human-verified correct ones, and the FLAVA head stays close to the accuracy of a constant answer; on COCO the FLAVA head answers "no match" for nearly every pair. The Qwen3-VL-Embed construction leans towards "match". The benchmark's balanced pairs hide such one-sided decisions and the pools expose them. These observations concern two released heads and one construction and are not evidence about matching heads in general.
+
+**Without a threshold.** Area under the ROC curve of the head's match probability, and the share of incorrect pairs in each pool (the accuracy of always answering "no match").
 
 | Pairs | AUC BLIP-2 | AUC FLAVA | Incorrect pairs |
 |---|---|---|---|
@@ -226,6 +282,8 @@ Paired differences in pairwise accuracy (95% bootstrap interval): FLAVA − SigL
 | Qwen3-VL-Embed | 87.6 | 54.8 | 71.2 |
 
 Paired differences in pairwise accuracy (95% bootstrap interval): FLAVA − SigLIP2: +1.1 [+0.1, +2.1]; FLAVA − CLIP: +4.6 [+3.5, +5.7]; Qwen2.5-VL-FT − CLIP: +1.6 [+0.4, +2.8].
+
+On the 100 pool queries of SVO-Probes with the human labels: T→I: Kendall's τ between pairwise accuracy and human-judged Success@1 0.60 (p = 0.14), SigLIP2 minus FLAVA in human-judged Success@1 +3 points (paired randomisation test, p = 0.727); I→T: Kendall's τ between pairwise accuracy and human-judged Success@1 0.60 (p = 0.14), SigLIP2 minus FLAVA in human-judged Success@1 +16 points (paired randomisation test, p = 0.007).
 
 ## 11. SugarCrepe pairwise accuracy by subset
 
@@ -270,6 +328,17 @@ Image queries of the COCO pool. `Best relevant` scores each edited caption again
 | SigLIP2 | 94.6 | 77.2 | 95.5 | 84.3 | 0.0001 | 0.63 |
 | Qwen2.5-VL-FT | 97.8 | 77.5 | 92.8 | 74.4 | 0.0001 | 1.00 |
 | Qwen3-VL-Embed | 94.7 | 80.4 | 98.1 | 88.4 | 0.0001 | 0.22 |
+
+The comparison under one rule for all conditions: every negative, handcrafted or mined, is scored against the caption that the SugarCrepe item was built from (averaged over the items of the image). Differences are handcrafted minus mined, with Holm-corrected p-values.
+
+| Model | Handcrafted | Other-mined | diff | p | All pooled | diff | p | Self-mined | diff | p |
+|---|---|---|---|---|---|---|---|---|---|---|
+| CLIP | 70.3 | 86.2 | -15.9 | 0.001 | 74.9 | -4.7 | 1.000 | 42.5 | +27.1 | 0.000 |
+| BLIP-2 | 69.1 | 82.3 | -13.2 | 0.006 | 68.7 | +0.4 | 1.000 | 26.8 | +42.1 | 0.000 |
+| FLAVA | 80.2 | 90.8 | -10.5 | 0.006 | 79.4 | +0.9 | 1.000 | 43.2 | +36.7 | 0.000 |
+| SigLIP2 | 77.2 | 88.7 | -11.6 | 0.004 | 80.1 | -2.9 | 1.000 | 53.1 | +24.0 | 0.000 |
+| Qwen2.5-VL-FT | 77.5 | 85.4 | -8.0 | 0.017 | 75.9 | +1.6 | 1.000 | 42.4 | +35.6 | 0.000 |
+| Qwen3-VL-Embed | 80.4 | 91.6 | -11.2 | 0.006 | 87.6 | -7.2 | 0.276 | 64.4 | +14.2 | 0.010 |
 
 ## 14. Sensitivity to the pool depth
 

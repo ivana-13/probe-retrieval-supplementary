@@ -79,6 +79,12 @@ def shared_roles(d, q, c):
     return max(sum(a == b for a, b in zip(t, u)) for t in qt for u in ct)
 
 
+def o3_incorrect(entry):
+    """True when o3 labelled the pair in at least one list and never called it correct."""
+    labs = [lab.get("o3") for lab in entry["labels"].values() if isinstance(lab, dict) and lab.get("o3")]
+    return bool(labs) and all(x != "correct" for x in labs)
+
+
 def unanimous_incorrect(entry):
     """True when every three-annotator label set of the pair says incorrect three times; None when the pair
     has no three-annotator labels (retrieved by the Qwen embedders only, or a text-to-image pair)."""
@@ -127,6 +133,8 @@ for m in SYSTEMS:
             neg_other_dual = [c for c in neg_other if not set(entries[c]["retrieved_by"]) <= QWEN]
             neg_other_unan = [c for c in neg_other if unanimous_incorrect(entries[c])]
             neg_other_consistent = [c for c in neg_other if not entries[c]["labels"].get("disagreement")]
+            # negatives that the o3 assessor also judged incorrect in every list in which it labelled the pair
+            neg_other_o3 = [c for c in neg_other if o3_incorrect(entries[c])]
 
             def acc(negs):
                 return float(np.mean(s.score(d, q, list(negs)) < g)) if len(negs) else None
@@ -168,7 +176,8 @@ for m in SYSTEMS:
                    "own_all": bool(all(own)) if own else None, "n_own": len(own), "own_hits": float(np.sum(own)),
                    "random": rand, "pool_other": acc(neg_other), "pool_self": acc(neg_self), "pool_all": acc(neg_all),
                    "pool_other_dual": acc(neg_other_dual), "pool_other_unanimous": acc(neg_other_unan),
-                   "pool_other_consistent": acc(neg_other_consistent),
+                   "pool_other_consistent": acc(neg_other_consistent), "pool_other_o3": acc(neg_other_o3),
+                   "n_other_o3": len(neg_other_o3),
                    "n_other": len(neg_other), "n_other_qwen_only": len(neg_other) - len(neg_other_dual),
                    "n_other_unanimous": len(neg_other_unan), "n_self": len(neg_self), "n_bench": len(bench),
                    "other_beating": int(np.sum(s.score(d, q, neg_other) >= g)) if neg_other else 0,
@@ -186,7 +195,8 @@ for m in SYSTEMS:
 
         col = lambda k: [r[k] for r in rows]
         res = {k: summ(col(k)) for k in ["benchmark", "benchmark_own", "random", "pool_other", "pool_self", "pool_all",
-                                         "pool_other_dual", "pool_other_unanimous", "pool_other_consistent"]}
+                                         "pool_other_dual", "pool_other_unanimous", "pool_other_consistent", "pool_other_o3"]}
+        res["o3_agree_share_of_other"] = 100 * sum(col("n_other_o3")) / max(1, sum(col("n_other")))
         res["n_other_total"] = int(sum(col("n_other")))
         res["qwen_only_share_of_other"] = 100 * sum(col("n_other_qwen_only")) / max(1, sum(col("n_other")))
         res["unanimous_share_of_other"] = 100 * sum(col("n_other_unanimous")) / max(1, sum(col("n_other")))
@@ -205,7 +215,11 @@ for m in SYSTEMS:
                  "benchmark_vs_all": paired(col("benchmark"), col("pool_all")),
                  "benchmark_vs_other_dual": paired(col("benchmark_own"), col("pool_other_dual")),
                  "benchmark_vs_other_unanimous": paired(col("benchmark_own"), col("pool_other_unanimous")),
-                 "benchmark_vs_other_consistent": paired(col("benchmark_own"), col("pool_other_consistent"))}
+                 "benchmark_vs_other_consistent": paired(col("benchmark_own"), col("pool_other_consistent")),
+                 # the same checks against the best-relevant-item variant of the handcrafted condition (paper)
+                 "benchmark_max_vs_other_unanimous": paired(col("benchmark"), col("pool_other_unanimous")),
+                 "benchmark_max_vs_other_dual": paired(col("benchmark"), col("pool_other_dual")),
+                 "benchmark_max_vs_other_o3": paired(col("benchmark"), col("pool_other_o3"))}
         # C. informative subset: positive outside the model's top 10 (otherwise other-mined accuracy is 1 by construction)
         outside = [r for r in rows if r["rank"] > 10]
         tests["outside_top10"] = {
@@ -333,9 +347,11 @@ for m in SYSTEMS:
 # Holm correction over the eight model-and-direction cells, per comparison and per test
 for comp in ["benchmark_vs_other", "benchmark_own_vs_other", "random_vs_benchmark", "random_vs_benchmark_own",
              "other_vs_self", "benchmark_vs_all",
-             "benchmark_vs_other_dual", "benchmark_vs_other_unanimous", "benchmark_vs_other_consistent"]:
+             "benchmark_vs_other_dual", "benchmark_vs_other_unanimous", "benchmark_vs_other_consistent",
+             "benchmark_max_vs_other_unanimous", "benchmark_max_vs_other_dual", "benchmark_max_vs_other_o3"]:
     for test in ["p_randomisation", "p_wilcoxon"]:
-        adj = holm({(m, d): out["tests"][m][d][comp][test] for m in SYSTEMS for d in DIRECTIONS})
+        adj = holm({(m, d): out["tests"][m][d][comp][test] for m in SYSTEMS for d in DIRECTIONS
+                    if out["tests"][m][d][comp]["n"] > 0})
         for (m, d), p in adj.items():
             out["tests"][m][d][comp][test + "_holm"] = p
 for key in ["test", "test_own"]:
@@ -394,8 +410,8 @@ for m in SYSTEMS:
                      "benchmark_vs_other_dual", "benchmark_vs_other_unanimous"]:
             c = t[comp]
             print(f"   {comp:30s} diff {c['diff']:5.1f} [{c['lo']:5.1f},{c['hi']:5.1f}] n {c['n']:3d} "
-                  f"rand p {c['p_randomisation']:.5f} (Holm {c['p_randomisation_holm']:.5f}) "
-                  f"wilcoxon {c['p_wilcoxon']:.5f} (Holm {c['p_wilcoxon_holm']:.5f})")
+                  f"rand p {c['p_randomisation']:.5f} (Holm {c.get('p_randomisation_holm', float('nan')):.5f}) "
+                  f"wilcoxon {c['p_wilcoxon']:.5f} (Holm {c.get('p_wilcoxon_holm', float('nan')):.5f})")
         o = t["outside_top10"]
         print(f"   outside top 10 (own positive): bench {r1(o['benchmark_own'])} diff {o['test_own']['diff']:.1f} "
               f"p {o['test_own']['p_randomisation']:.5f} (Holm {o['test_own']['p_randomisation_holm']:.5f})")

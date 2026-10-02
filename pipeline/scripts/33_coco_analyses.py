@@ -88,15 +88,23 @@ for m in models:
             top1 = lab.get(own[0]) if own else None
             # the probe's own decision: each edited caption against the caption it was built from (image queries only);
             # "benchmark" scores the same edited captions against the best relevant caption, like the other conditions
-            probe_own = None
+            # "*_own" for the mined conditions applies the probe's rule to them: the negatives are scored against the
+            # caption each SugarCrepe item was built from, so handcrafted and mined negatives face the same positive
+            probe_own, own_rule = None, {"other": None, "self": None, "all": None}
             if d == "i2t" and probe_by_image.get(qq):
                 dec = []
                 for cap, neg in probe_by_image[qq]:
                     a, b = s.score(d, qq, [cap, neg])
                     dec.append(float(a > b))
                 probe_own = float(np.mean(dec))
+                src = s.score(d, qq, [cap for cap, _ in probe_by_image[qq]])
+                for name, ns in [("other", neg_other), ("self", neg_self), ("all", [conv(c) for c in negs])]:
+                    if ns:
+                        sc = s.score(d, qq, ns)
+                        own_rule[name] = float(np.mean([np.mean(sc < x) for x in src]))
             rows.append({"q": str(q), "rank": rank, "benchmark": bench_perq.get(m, {}).get(d, {}).get("benchmark", {}).get(str(q)),
-                         "benchmark_own": probe_own,
+                         "benchmark_own": probe_own, "pool_other_own": own_rule["other"],
+                         "pool_self_own": own_rule["self"], "pool_all_own": own_rule["all"],
                          "random": rand, "pool_other": acc(neg_other), "pool_self": acc(neg_self),
                          "pool_all": acc([conv(c) for c in negs]), "n_other": len(neg_other),
                          "other_beating": int(np.sum(s.score(d, qq, neg_other) >= g)) if neg_other else 0,
@@ -104,7 +112,8 @@ for m in models:
                          "_g": g, "_neg_scores": neg_scores,
                          "_other_scores": s.score(d, qq, neg_other) if neg_other else np.array([])})
         col = lambda k: [r[k] for r in rows]
-        res = {k: summ(col(k)) for k in ["benchmark", "benchmark_own", "random", "pool_other", "pool_self", "pool_all"]}
+        res = {k: summ(col(k)) for k in ["benchmark", "benchmark_own", "random", "pool_other", "pool_self", "pool_all",
+                                         "pool_other_own", "pool_self_own", "pool_all_own"]}
         res["violations_of_bound"] = int(sum(r["other_beating"] > 0 for r in rows if r["rank"] <= 10))
         out["matched"][m][d] = res
         outside = [r for r in rows if r["rank"] > 10]
@@ -117,6 +126,9 @@ for m in models:
             "benchmark_vs_benchmark_own": paired(col("benchmark"), col("benchmark_own")),
             "all_vs_benchmark_own": paired(col("pool_all"), col("benchmark_own")),
             "self_vs_benchmark_own": paired(col("pool_self"), col("benchmark_own")),
+            "benchmark_own_vs_other_own": paired(col("benchmark_own"), col("pool_other_own")),
+            "benchmark_own_vs_all_own": paired(col("benchmark_own"), col("pool_all_own")),
+            "benchmark_own_vs_self_own": paired(col("benchmark_own"), col("pool_self_own")),
             "other_vs_self": paired(col("pool_other"), col("pool_self")),
             "outside_top10": {"n_queries": len(outside), "benchmark": summ([r["benchmark"] for r in outside]),
                               "pool_other": summ([r["pool_other"] for r in outside]),
@@ -167,7 +179,8 @@ for m in models:
 
 # Holm correction over the cells in which each comparison exists
 for comp in ["benchmark_vs_other", "benchmark_vs_all", "random_vs_other", "random_vs_all", "random_vs_benchmark", "other_vs_self",
-             "benchmark_vs_benchmark_own", "all_vs_benchmark_own", "self_vs_benchmark_own"]:
+             "benchmark_vs_benchmark_own", "all_vs_benchmark_own", "self_vs_benchmark_own",
+             "benchmark_own_vs_other_own", "benchmark_own_vs_all_own", "benchmark_own_vs_self_own"]:
     cells = {(m, d): out["tests"][m][d][comp]["p_randomisation"] for m in models for d in DIRECTIONS if out["tests"][m][d][comp]}
     for (m, d), p in M.holm(cells).items():
         out["tests"][m][d][comp]["p_randomisation_holm"] = p
