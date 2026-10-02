@@ -1,0 +1,122 @@
+{
+ "judge": "o3",
+ "t2i": {
+  "accuracy": 0.9335260115606936,
+  "f1_correct": 0.5818181818181818,
+  "precision_correct": 0.6666666666666666,
+  "recall_correct": 0.5161290322580645,
+  "precision_incorrect": 0.953416149068323,
+  "recall_incorrect": 0.9746031746031746,
+  "kappa": 0.5463459126667427,
+  "n": 346,
+  "f1_ci": [
+   0.4,
+   0.7333333333333333
+  ],
+  "kappa_ci": [
+   0.3619429179597635,
+   0.7080238010434466
+  ],
+  "error_type_among_incorrect": {
+   "weighted_f1": 0.5124444660549609,
+   "macro_f1": 0.4673030258345618,
+   "kappa": 0.22699173753090873,
+   "confusion": [
+    [
+     82,
+     1,
+     132
+    ],
+    [
+     3,
+     19,
+     29
+    ],
+    [
+     2,
+     0,
+     39
+    ]
+   ],
+   "labels": [
+    "subject incorrect",
+    "verb incorrect",
+    "object incorrect"
+   ],
+   "n": 307
+  },
+  "n_pairs": 346,
+  "n_typed": 307,
+  "human_share_correct": 0.08959537572254335
+ },
+ "i2t": {
+  "accuracy": 0.8440111420612814,
+  "f1_correct": 0.7627118644067796,
+  "precision_correct": 0.8737864077669902,
+  "recall_correct": 0.6766917293233082,
+  "precision_incorrect": 0.83203125,
+  "recall_incorrect": 0.9424778761061947,
+  "kappa": 0.6493039807417228,
+  "n": 359,
+  "f1_ci": [
+   0.6956521739130435,
+   0.8205179282868525
+  ],
+  "kappa_ci": [
+   0.5579997077634246,
+   0.7313028931863357
+  ],
+  "error_type_among_incorrect": {
+   "weighted_f1": 0.7410647591944082,
+   "macro_f1": 0.7205585803589433,
+   "kappa": 0.5596140592694694,
+   "confusion": [
+    [
+     54,
+     4,
+     32
+    ],
+    [
+     0,
+     14,
+     8
+    ],
+    [
+     8,
+     2,
+     91
+    ]
+   ],
+   "labels": [
+    "subject incorrect",
+    "verb incorrect",
+    "object incorrect"
+   ],
+   "n": 213
+  },
+  "n_pairs": 359,
+  "n_typed": 213,
+  "human_share_correct": 0.37047353760445684
+ },
+ "overall": {
+  "accuracy": 0.8879432624113475,
+  "f1_correct": 0.7285223367697594,
+  "precision_correct": 0.8346456692913385,
+  "recall_correct": 0.6463414634146342,
+  "precision_incorrect": 0.8996539792387543,
+  "recall_incorrect": 0.9611829944547134,
+  "kappa": 0.6593557147138515,
+  "n": 705,
+  "f1_ci": [
+   0.6690902550686724,
+   0.7823203194321207
+  ],
+  "kappa_ci": [
+   0.589444273000403,
+   0.7225555049838994
+  ],
+  "n_pairs": 705,
+  "kappa_4way": 0.42250825280759285,
+  "n_4way": 705
+ }
+}

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+*.npy
+svo_probes/images/
+pipeline/data/

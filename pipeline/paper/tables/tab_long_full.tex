@@ -1,0 +1,16 @@
+\begin{tabular}{l ccc ccc ccc ccc}
+\toprule
+& \multicolumn{6}{c}{T$\rightarrow$I} & \multicolumn{6}{c}{I$\rightarrow$T}\\
+\cmidrule(lr){2-7}\cmidrule(lr){8-13}
+& \multicolumn{3}{c}{Full dataset} & \multicolumn{3}{c}{\sat{1}, pool queries} & \multicolumn{3}{c}{Full dataset} & \multicolumn{3}{c}{\sat{1}, pool queries}\\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}
+Model & \sat{1} & \sat{5} & \sat{10} & Strict & Human & o3 & \sat{1} & \sat{5} & \sat{10} & Strict & Human & o3\\
+\midrule
+CLIP & 8.7\ci{0.5} & 23.8 & 32.8 & 10 & 64 & 65 & 6.5\ci{0.5} & 20.5 & 30.3 & 8 & 54 & 46 \\
+BLIP-2 & 9.7\ci{0.5} & 27.1 & 37.9 & 12 & 76 & 70 & 13.2\ci{0.6} & 35.3 & 47.1 & 16 & 75 & 77 \\
+FLAVA & 8.6\ci{0.5} & 24.3 & 34.7 & 10 & 72 & 67 & 5.6\ci{0.4} & 17.2 & 24.9 & 6 & 62 & 60 \\
+SigLIP2 & 10.4\ci{0.6} & 28.5 & 39.1 & 13 & 75 & 76 & 13.4\ci{0.6} & 35.9 & 48.1 & 21 & 78 & 71 \\
+Qwen2.5-VL-FT & 12.2\ci{0.6} & 31.7 & 42.6 & 12 & 70 & 79 & 13.2\ci{0.6} & 35.0 & 46.7 & 13 & 79 & 67 \\
+Qwen3-VL-Embed & 14.4\ci{0.7} & 36.9 & 49.0 & 12 & 80 & 84 & 16.8\ci{0.7} & 41.0 & 53.3 & 16 & 90 & 83 \\
+\bottomrule
+\end{tabular}

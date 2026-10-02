@@ -1,0 +1,1068 @@
+{
+ "CLIP": {
+  "t2i": {
+   "S@1": {
+    "mean": 36.0240429222639,
+    "lo": 35.44717414982452,
+    "hi": 36.64932026301989,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 60.974625842107386,
+    "lo": 60.369518738149985,
+    "hi": 61.57590060107305,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 71.01536972044052,
+    "lo": 70.45857033361573,
+    "hi": 71.55996611400218,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 80.58009601032717,
+    "lo": 80.12424865867925,
+    "hi": 81.0723506393965,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 47.2716686250005,
+    "lo": 46.77115562562684,
+    "hi": 47.81528807890499,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 56.96,
+    "lo": 55.559999999999995,
+    "hi": 58.4,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 79.84,
+    "lo": 78.7995,
+    "hi": 81.0,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 86.88,
+    "lo": 85.96000000000001,
+    "hi": 87.82,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 92.36,
+    "lo": 91.6595,
+    "hi": 93.12,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 67.06856010862202,
+    "lo": 65.93527808496759,
+    "hi": 68.23985795004144,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 79.24377579549994,
+    "lo": 78.33843695912661,
+    "hi": 80.20236985754227,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 74.27745664739885,
+    "lo": 70.95375722543352,
+    "hi": 77.45664739884393,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 80.21338506304558,
+    "lo": 78.41901066925315,
+    "hi": 81.86226964112512,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 82.61421319796955,
+    "lo": 79.94923857868021,
+    "hi": 85.27918781725889,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 94.24939467312349,
+    "lo": 93.09927360774817,
+    "hi": 95.33898305084746,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 71.19487908961594,
+    "lo": 68.49217638691323,
+    "hi": 73.47261735419629,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 62.91291291291291,
+    "lo": 59.00525525525525,
+    "hi": 66.51651651651652,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 63.6734693877551,
+    "lo": 57.55102040816327,
+    "hi": 69.38775510204081,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 99.9,
+     "lo": 99.69999999999999,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 99.9,
+     "lo": 99.69999999999999,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 93.80317460317461,
+     "lo": 89.73116071428572,
+     "hi": 97.15875992063494,
+     "n": 100
+    }
+   }
+  }
+ },
+ "BLIP2": {
+  "t2i": {
+   "S@1": {
+    "mean": 30.303763766186613,
+    "lo": 29.7429303320021,
+    "hi": 30.904836822784297,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 52.54750090766066,
+    "lo": 51.893985235386666,
+    "hi": 53.18498124167977,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 62.62858525959095,
+    "lo": 62.0113760135544,
+    "hi": 63.257896647706644,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 72.40308201218282,
+    "lo": 71.8382145306386,
+    "hi": 72.95978054782363,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 40.64982340180227,
+    "lo": 40.12916709858935,
+    "hi": 41.20639364185138,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 40.42,
+    "lo": 39.160000000000004,
+    "hi": 41.8,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 68.14,
+    "lo": 66.9,
+    "hi": 69.52000000000001,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 78.68,
+    "lo": 77.60000000000001,
+    "hi": 79.82000000000001,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 86.92,
+    "lo": 86.0,
+    "hi": 87.88,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 52.84009009394458,
+    "lo": 51.77546757212086,
+    "hi": 54.003558502696556,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 77.23339102649447,
+    "lo": 76.31473838370391,
+    "hi": 78.15204366928505,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 74.56647398843931,
+    "lo": 71.38728323699422,
+    "hi": 77.74927745664738,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 85.83899127061105,
+    "lo": 84.28709990300679,
+    "hi": 87.34238603297769,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 74.49238578680203,
+    "lo": 71.44670050761421,
+    "hi": 77.53807106598984,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 94.0677966101695,
+    "lo": 92.91767554479419,
+    "hi": 95.2179176755448,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 64.22475106685633,
+    "lo": 61.73541963015647,
+    "hi": 66.6429587482219,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 51.051051051051054,
+    "lo": 47.2972972972973,
+    "hi": 54.95495495495496,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 53.46938775510204,
+    "lo": 47.3469387755102,
+    "hi": 59.591836734693885,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 99.4,
+     "lo": 98.9,
+     "hi": 99.8,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 91.15544733044734,
+     "lo": 86.01494318181817,
+     "hi": 95.4429752886003,
+     "n": 100
+    }
+   }
+  }
+ },
+ "FLAVA": {
+  "t2i": {
+   "S@1": {
+    "mean": 41.50631328411796,
+    "lo": 40.896869579248865,
+    "hi": 42.11958933397878,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 71.25337851466375,
+    "lo": 70.69667997902296,
+    "hi": 71.83448303683086,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 81.74593569728509,
+    "lo": 81.28998749445319,
+    "hi": 82.20995199483642,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 89.89874541127114,
+    "lo": 89.52761305417725,
+    "hi": 90.28197991044415,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 54.72823126508154,
+    "lo": 54.228248373078735,
+    "hi": 55.23742571042845,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 48.76,
+    "lo": 47.339999999999996,
+    "hi": 50.160000000000004,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 80.10000000000001,
+    "lo": 78.96,
+    "hi": 81.2,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 89.86,
+    "lo": 88.98,
+    "hi": 90.70049999999999,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 94.98,
+    "lo": 94.36,
+    "hi": 95.56,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 62.36162177648632,
+    "lo": 61.26995594338152,
+    "hi": 63.48439395084835,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 83.81041139661829,
+    "lo": 82.99793636000533,
+    "hi": 84.63586739448809,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 69.21965317919076,
+    "lo": 65.89595375722543,
+    "hi": 72.54335260115607,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 89.86420950533463,
+    "lo": 88.55480116391853,
+    "hi": 91.17361784675073,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 85.78680203045685,
+    "lo": 83.3756345177665,
+    "hi": 88.07106598984772,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 94.12832929782083,
+    "lo": 93.03722760290557,
+    "hi": 95.27845036319611,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 74.67994310099573,
+    "lo": 72.40398293029871,
+    "hi": 76.88477951635846,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 75.97597597597597,
+    "lo": 72.67267267267268,
+    "hi": 79.12912912912913,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 71.83673469387755,
+    "lo": 66.12244897959184,
+    "hi": 77.14285714285715,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 96.35393217893218,
+     "lo": 93.55906114718616,
+     "hi": 98.54060966810968,
+     "n": 100
+    }
+   }
+  }
+ },
+ "SigLIP2": {
+  "t2i": {
+   "S@1": {
+    "mean": 48.54572592682238,
+    "lo": 47.924482633426116,
+    "hi": 49.17513816612207,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 73.11710839485256,
+    "lo": 72.5966154342652,
+    "hi": 73.67380693049337,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 81.48775666626327,
+    "lo": 81.03180846343136,
+    "hi": 81.95974020735002,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 88.34967122514018,
+    "lo": 87.96240267860745,
+    "hi": 88.74097381903263,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 59.534437072405666,
+    "lo": 59.029122994248176,
+    "hi": 60.051528607746505,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 64.2,
+    "lo": 62.899499999999996,
+    "hi": 65.56,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 85.64,
+    "lo": 84.66,
+    "hi": 86.58,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 91.24,
+    "lo": 90.44,
+    "hi": 92.0205,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 95.1,
+    "lo": 94.52000000000001,
+    "hi": 95.67999999999999,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 73.48877562977098,
+    "lo": 72.47168354502608,
+    "hi": 74.52126066212983,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 82.6920516575689,
+    "lo": 81.85294900812143,
+    "hi": 83.5441352682732,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 79.04624277456648,
+    "lo": 76.15606936416185,
+    "hi": 81.9364161849711,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 90.00969932104753,
+    "lo": 88.74878758486906,
+    "hi": 91.31910766246362,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 81.5989847715736,
+    "lo": 79.06091370558376,
+    "hi": 84.26395939086294,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 94.18886198547214,
+    "lo": 93.03874092009686,
+    "hi": 95.33898305084746,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 69.91465149359887,
+    "lo": 67.49644381223328,
+    "hi": 72.40398293029871,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 70.87087087087087,
+    "lo": 67.41741741741741,
+    "hi": 74.17417417417418,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 62.857142857142854,
+    "lo": 57.14285714285714,
+    "hi": 68.9795918367347,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 94.55974025974025,
+     "lo": 90.7993181818182,
+     "hi": 97.7595183982684,
+     "n": 100
+    }
+   }
+  }
+ },
+ "Qwen25": {
+  "t2i": {
+   "S@1": {
+    "mean": 37.9361813707693,
+    "lo": 37.33510831417161,
+    "hi": 38.533422082375246,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 63.22965831618863,
+    "lo": 62.63231675339868,
+    "hi": 63.83486627133003,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 73.47210456250757,
+    "lo": 72.89916898624391,
+    "hi": 74.03293799669208,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 82.77461777401267,
+    "lo": 82.3066682802856,
+    "hi": 83.2344991730203,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 49.372515312519226,
+    "lo": 48.858625247248156,
+    "hi": 49.89771275621611,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 51.78,
+    "lo": 50.41949999999999,
+    "hi": 53.16,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 76.82,
+    "lo": 75.69900000000001,
+    "hi": 78.0,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 84.92,
+    "lo": 83.9795,
+    "hi": 85.9005,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 91.22,
+    "lo": 90.48,
+    "hi": 92.0,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 62.73479651299853,
+    "lo": 61.60335929009071,
+    "hi": 63.884069743311386,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 80.86806017840502,
+    "lo": 79.93576088403674,
+    "hi": 81.73345759552656,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 78.46820809248555,
+    "lo": 75.43352601156069,
+    "hi": 81.5028901734104,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 84.28709990300679,
+    "lo": 82.7339961202716,
+    "hi": 85.83899127061105,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 77.79187817258884,
+    "lo": 75.0,
+    "hi": 80.71065989847716,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 93.46246973365618,
+    "lo": 92.19128329297821,
+    "hi": 94.67312348668281,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 72.54623044096729,
+    "lo": 70.27027027027027,
+    "hi": 74.8221906116643,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 67.26726726726727,
+    "lo": 63.51351351351351,
+    "hi": 70.87087087087087,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 68.57142857142857,
+    "lo": 62.857142857142854,
+    "hi": 74.29591836734689,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 99.7,
+     "lo": 99.2,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 99.9,
+     "lo": 99.69999999999999,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 97.76940836940838,
+     "lo": 96.26173520923523,
+     "hi": 99.08363997113996,
+     "n": 100
+    }
+   }
+  }
+ },
+ "Qwen3": {
+  "t2i": {
+   "S@1": {
+    "mean": 54.79446528702246,
+    "lo": 54.177054338617936,
+    "hi": 55.359231917382715,
+    "n": 24789
+   },
+   "S@5": {
+    "mean": 79.42635846544839,
+    "lo": 78.9260357416596,
+    "hi": 79.92668118923716,
+    "n": 24789
+   },
+   "S@10": {
+    "mean": 86.91355036508128,
+    "lo": 86.49390858848683,
+    "hi": 87.34115938521118,
+    "n": 24789
+   },
+   "S@20": {
+    "mean": 92.45229738997136,
+    "lo": 92.13360764855379,
+    "hi": 92.77098713138892,
+    "n": 24789
+   },
+   "MRR@20": {
+    "mean": 65.70201030615456,
+    "lo": 65.21851496463874,
+    "hi": 66.17262633077891,
+    "n": 24789
+   }
+  },
+  "i2t": {
+   "S@1": {
+    "mean": 71.22,
+    "lo": 69.96,
+    "hi": 72.48,
+    "n": 5000
+   },
+   "S@5": {
+    "mean": 89.88000000000001,
+    "lo": 89.05949999999999,
+    "hi": 90.68,
+    "n": 5000
+   },
+   "S@10": {
+    "mean": 94.56,
+    "lo": 93.9395,
+    "hi": 95.17999999999999,
+    "n": 5000
+   },
+   "S@20": {
+    "mean": 97.61999999999999,
+    "lo": 97.2,
+    "hi": 98.04,
+    "n": 5000
+   },
+   "MRR@20": {
+    "mean": 79.44757119583203,
+    "lo": 78.54963619159906,
+    "hi": 80.36454433008726,
+    "n": 5000
+   }
+  },
+  "pairwise": {
+   "overall": {
+    "mean": 87.64478764478764,
+    "lo": 86.91252829183864,
+    "hi": 88.37737984289708,
+    "n": 7511
+   },
+   "add_att": {
+    "mean": 85.54913294797689,
+    "lo": 83.09248554913295,
+    "hi": 88.15028901734104,
+    "n": 692
+   },
+   "add_obj": {
+    "mean": 90.59165858389913,
+    "lo": 89.37924345295829,
+    "hi": 91.8525703200776,
+    "n": 2062
+   },
+   "replace_att": {
+    "mean": 90.48223350253807,
+    "lo": 88.4517766497462,
+    "hi": 92.51269035532995,
+    "n": 788
+   },
+   "replace_obj": {
+    "mean": 97.63922518159806,
+    "lo": 96.91283292978208,
+    "hi": 98.30659806295398,
+    "n": 1652
+   },
+   "replace_rel": {
+    "mean": 79.23186344238977,
+    "lo": 77.16927453769559,
+    "hi": 81.29445234708392,
+    "n": 1406
+   },
+   "swap_att": {
+    "mean": 77.47747747747748,
+    "lo": 74.32432432432432,
+    "hi": 80.63063063063063,
+    "n": 666
+   },
+   "swap_obj": {
+    "mean": 68.16326530612244,
+    "lo": 62.04081632653061,
+    "hi": 74.28571428571429,
+    "n": 245
+   }
+  },
+  "matched": {
+   "t2i": {
+    "random": {
+     "mean": 99.60000000000001,
+     "lo": 99.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": null
+   },
+   "i2t": {
+    "random": {
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0,
+     "n": 100
+    },
+    "benchmark": {
+     "mean": 94.6975468975469,
+     "lo": 90.76801406926405,
+     "hi": 97.79046356421357,
+     "n": 100
+    }
+   }
+  }
+ },
+ "pool": {
+  "queries": {
+   "t2i": [
+    "Three people standing next to a large elephant",
+    "Cute little boy with hat playing on laptop computer",
+    "There is a white coffee cup with a skull and bones on it next to a knife",
+    "Many surfboards are propped against a rail on the beach.",
+    "A person kicking up on their skateboard at the top of a ramp.",
+    "A close up picture of a table with some good food on it.",
+    "A baby elephant stands near to four larger adult elephants.",
+    "a brown bear is lying asleep in a hammock",
+    "A view of a modern building with skylight and a fire hydrant.",
+    "A large knife is sitting in front of a mug has a skull and crossbones.",
+    "The bathroom is a mess with sports gear.",
+    "There's a warning not to park under this tree.",
+    "A group of people on a sidewalk with their mobile phones.",
+    "a street corner is boarded by painted walls",
+    "Two men and one woman in front of an elephant.",
+    "A persons arm reaching over a table filled with food.",
+    "A young girl standing in front of a plate of food.",
+    "a red fire hydrant with a building in the background",
+    "Decorated coffee cup and knife sitting on a patterned surface.",
+    "A red fire hydrant embedded in a city sidewalk.",
+    "A park area with a wooden bench that is under a tree and green grass all around the bench.",
+    "a cat is standing up to a white toilet",
+    "A toilet sitting in a room surrounded by personal items.",
+    "some people sitting on top of a green truck as another man tries to get in it",
+    "A train is traveling underneath a cement bridge.",
+    "A bathroom with blue walls and pink tile.",
+    "A bathroom has red walls with yellow accents.",
+    "A train is making its way down the tracks.",
+    "a white sheep against a colored background orange blue purple and yellow",
+    "A colorful umbrella sitting outside of a pink building.",
+    "A group of men standing around a sidewalk together.",
+    "a train covered in black dirt sitting in a fancy train station",
+    "a man on a three wheeler following behind a two dogs and a cow",
+    "Cheese pizza is sliced into small pieces on a plate.",
+    "A child petting two dogs on the side of the street",
+    "The toilet is covered in sparkles with a red object in front of it.",
+    "A stop sign that is attached to a broken wooden pole.",
+    "A group of women wearing hats while standing at a dessert table.",
+    "A group of people that are standing outside of a bus.",
+    "Rows of various colored suitcases at an airport.",
+    "A woman getting food off of a table, with a purple sweater on.",
+    "A pile of different colored bags of luggage sitting on a floor.",
+    "Two laptops,computer,keyboard and other electrical gadgets are on the table.",
+    "A man in helmet riding an elephant next to trees.",
+    "a woman is feeding food to this small child",
+    "Street corner sign in a big city with multiple names",
+    "A sign with the word \"Pub\" hangs above several liquor bottles.",
+    "The painting is of a vase of flowers on a table.",
+    "a man in a blue shirt and red tie",
+    "A person is eating food at the table.",
+    "A woman feeds a toddler a hot dog while he holds a purple bottle.",
+    "Two people play video games while sitting on a couch.",
+    "a brown teddy bear and some wooden block toys",
+    "A cutting board with carrots and some other leafy green vegetables along side a knife.",
+    "A woman feeding a little boy french fries at a restaurant.",
+    "a stop sign sittin on a pole that is somewhat broken",
+    "Three cross-country skiers posing for the camera on a snowy lane",
+    "Several children are around a table at a birthday party.",
+    "a red train is docked at the station",
+    "a bunch of zebras out in a grassy field",
+    "A herd of zebra in dry vegetation near dry trees.",
+    "A row of surfboards leaned up against a wood rail in the sand.",
+    "A big brown bear asleep in a hammock.",
+    "Two very small yellow bananas on top of a wooden table next to a Malaysian coin.",
+    "An orange fire hydrant outside a modern office building",
+    "A young man balances himself as he tilts his skateboard up at the edge of an obstacle.",
+    "Someone is holding a black plate with two slices of pizza.",
+    "A double decker bus sitting on a green field.",
+    "Three men are skiing down a snow covered hill.",
+    "a party that is full of wine tasters seems pumping.",
+    "a man holding his cell phone up in a crowd",
+    "some elephants and one is by some water",
+    "An elephant drinking water while the rest of the herd is walking in dry grass.",
+    "A big bed sits in a living area with a ceiling fan, dresser, television set and wastepaper basket.",
+    "A red stop sign sitting on the floor next to a wall.",
+    "a child blows out the candles on a birthday cake.",
+    "A number zebras grazing in the woods.",
+    "A broken telephone pole in a neighborhood with a stop sign attached to it.",
+    "A sculpture of a toilet made from woven wood.",
+    "A group of people in a field with various kites in the sky.",
+    "This is a picture of four stuffed animals.",
+    "A living room with yellow walls and a black and white area rug.",
+    "A little girl standing in the grass with two soccer balls in front of her.",
+    "A bathroom with ski equipment laid out on the floor.",
+    "The train engine is followed by a line of open cars.",
+    "men staning in the street and holding cell phones",
+    "A group of people that are on a horse.",
+    "The people fly a kite by the tall stone building.",
+    "A young girl standing on top of a grass covered field.",
+    "a living room witj a couch some chairs and a tv",
+    "A coin laying next to some small bananas.",
+    "a row of surf boards placed in the sand",
+    "A baseball player in a red shirt is ready to hit the ball.",
+    "A child in a hat playing on a laptop computer",
+    "A guy and a pretty girl taking a picture in the mirror.",
+    "A knife, carrots, and cabbage on a white cutting board.",
+    "Three teddy bears and a stuffed cat on a stone wall.",
+    "Mom has to help him eat his hot dog and bun.",
+    "A mother and child fly a kite in a grassy field, with a tower in the background.",
+    "A white table topped with cakes and nuts."
+   ],
+   "i2t": [
+    146825,
+    10977,
+    183648,
+    405432,
+    47571,
+    570169,
+    15272,
+    415238,
+    441247,
+    257624,
+    215245,
+    530052,
+    492878,
+    336309,
+    12667,
+    321887,
+    352584,
+    405249,
+    290163,
+    66817,
+    291664,
+    553990,
+    294831,
+    373315,
+    321214,
+    450488,
+    140640,
+    139684,
+    203488,
+    92091,
+    266082,
+    334767,
+    203580,
+    127517,
+    42276,
+    534041,
+    226592,
+    331817,
+    473974,
+    473118,
+    297343,
+    457262,
+    475678,
+    296224,
+    374727,
+    336587,
+    392722,
+    193162,
+    147729,
+    268375,
+    561465,
+    344816,
+    77460,
+    465836,
+    207585,
+    358525,
+    246454,
+    2592,
+    163640,
+    179653,
+    399462,
+    284282,
+    24144,
+    140840,
+    511321,
+    421455,
+    432898,
+    468124,
+    267191,
+    211042,
+    447314,
+    489764,
+    2157,
+    286994,
+    36936,
+    171190,
+    386912,
+    209757,
+    46252,
+    363840,
+    164602,
+    385190,
+    511647,
+    356427,
+    399205,
+    349302,
+    223090,
+    506454,
+    323751,
+    205776,
+    462614,
+    377723,
+    18837,
+    8532,
+    176778,
+    38048,
+    1490,
+    94336,
+    532129,
+    214224
+   ]
+  },
+  "unique_pairs": {
+   "t2i": 3071,
+   "i2t": 3491
+  },
+  "models": [
+   "CLIP",
+   "BLIP2",
+   "FLAVA",
+   "SigLIP2",
+   "Qwen25",
+   "Qwen3"
+  ]
+ }
+}
