@@ -20,7 +20,8 @@ rows of the paper describe this reduced variant and are lower than published ret
 **Scoring.** Retrieval and pairwise decisions use the dot product of the image and caption embeddings. The embeddings of
 BLIP-2, Qwen2.5-VL-FT and Qwen3-VL-Embed are unit-normalised, so for them this is the cosine similarity; those of CLIP,
 FLAVA and SigLIP2 are used as extracted on SVO-Probes (`svo_eval/embeddings.py`). `scripts/03c_metrics_cosine.py`
-repeats the SVO-Probes metrics with cosine similarity for these three models. All models are scored with cosine
+repeats the SVO-Probes metrics with cosine similarity for these three models, and `scripts/43_cosine_check.py` repeats
+the comparison of handcrafted and other-mined negatives on the judged pool (`extra_results.md`, section 16). All models are scored with cosine
 similarity on COCO (`svo_eval/coco_scoring.py`).
 
 **Qwen2.5-VL-FT adapter.** QLoRA on the attention projections (q, k, v, o; rank 64, alpha 16, dropout 0.05), InfoNCE

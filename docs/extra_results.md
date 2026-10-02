@@ -392,3 +392,18 @@ Strict labels. MRR@20: mean reciprocal rank of the first relevant item, 0 beyond
 | SigLIP2 | 48.5 | 73.1 | 81.5 | 59.5 | 64.2 | 85.6 | 91.2 | 73.5 |
 | Qwen2.5-VL-FT | 37.9 | 63.2 | 73.5 | 49.4 | 51.8 | 76.8 | 84.9 | 62.7 |
 | Qwen3-VL-Embed | 54.8 | 79.4 | 86.9 | 65.7 | 71.2 | 89.9 | 94.6 | 79.4 |
+
+## 16. Scoring rule: cosine similarity for CLIP, FLAVA and SigLIP2 on SVO-Probes
+
+These three models produced their judged lists under the dot product of unnormalised embeddings. The table scores the same judged negatives with cosine similarity. `Other`: the paper's other-mined negatives; `Other, strict`: without the negatives that the model ranks in its top 10 under cosine; `outside`: the queries whose first relevant item is outside the model's cosine top 10. Gaps are handcrafted minus other-mined, p-values Holm-corrected over the six cells.
+
+| Dir. | Model | S@1 dot product | S@1 cosine | Handcr. | Other | gap | p | Other, strict | gap | p | n outside | gap (outside) | p |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| T→I | CLIP | 8.7 | 9.9 | 87.3 | 78.9 | +8.4 | 0.002 | 80.6 | +6.7 | 0.025 | 69 | +12.0 | 0.001 |
+| T→I | FLAVA | 8.6 | 9.6 | 91.0 | 82.6 | +8.3 | 0.002 | 83.5 | +7.4 | 0.007 | 53 | +15.7 | 0.001 |
+| T→I | SigLIP2 | 10.4 | 11.9 | 92.0 | 81.9 | +10.0 | 0.000 | 82.8 | +9.2 | 0.001 | 47 | +22.4 | 0.000 |
+| I→T | CLIP | 6.5 | 13.1 | 88.6 | 77.2 | +11.3 | 0.001 | 81.2 | +7.3 | 0.032 | 59 | +22.1 | 0.000 |
+| I→T | FLAVA | 5.6 | 10.0 | 80.4 | 70.9 | +9.5 | 0.002 | 77.0 | +3.4 | 0.204 | 64 | +14.9 | 0.001 |
+| I→T | SigLIP2 | 13.4 | 16.4 | 93.5 | 87.9 | +5.6 | 0.014 | 89.0 | +4.6 | 0.086 | 38 | +16.8 | 0.001 |
+
+Pairwise accuracy under the dot product and under cosine: CLIP 82.0 and 84.1; FLAVA 86.3 and 87.1; SigLIP2 86.0 and 87.5.
