@@ -5,9 +5,9 @@ the SVO-Probes pools. The link to the annotation tool and the screenshots of its
 
 ## Who labelled what
 
-- The image-to-text lists of CLIP, BLIP-2, FLAVA and SigLIP2 (4,000 pairs) were labelled by three annotators: an expert
-  and two volunteers. All three have tertiary education and are non-native speakers of English. The final label is the
-  majority vote.
+- The image-to-text lists of CLIP, BLIP-2, FLAVA and SigLIP2 (4,000 pairs) were labelled by three annotators: an expert,
+  who is one of the authors, and two volunteers. All three have tertiary education and are non-native speakers of
+  English. The final label is the majority vote.
 - All other SVO-Probes lists (the text-to-image lists of the four dual encoders and both directions of the two Qwen
   models) were labelled by the expert alone.
 - The expert also assigned the error type (subject, verb or object) of every pair labelled incorrect.
